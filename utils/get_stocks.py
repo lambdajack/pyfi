@@ -6,6 +6,13 @@ import yfinance as yf
 
 
 def get_historic(tickers: Array):
+    """
+    This function will get the historic data for all tickers in the tickers array.
+
+    Daily, hourly and five minute data is downloaded by default.
+
+    Populate the tickers array below from a csv. Default is data/lists/USA-combined-tickers.csv
+    """
     for t in tickers:
         print("Fetching data for " + t)
 
@@ -38,10 +45,14 @@ def get_historic(tickers: Array):
 
 
 def append_tickers_from_csv(csvFile: str, tickers: Array):
+    """
+    Ticker symbols must be in the first column of the csv file.
+    """
     with open(csvFile) as f:
         c = csv.reader(f)
         for row in c:
-            if row[0] == "ticker":
+            if "ticker" in row[0].lower():
+                print("Skipping header row")
                 continue
             tickers.append(row[0])
 
